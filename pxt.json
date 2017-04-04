@@ -1,15 +1,16 @@
 {
     "name": "bluetooth-midi",
     "version": "0.0.0",
-    "description": "",
+    "description": "A Bluetooth MIDI service",
     "license": "MIT",
     "dependencies": {
         "core": "*",
-        "radio": "*"
+        "bluetooth": "*"
     },
     "files": [
         "README.md",
-        "main.ts",
+        "BLEMIDI.cpp",
+        "BLEMIDI.h",
         "extension.cpp",
         "extension.ts",
         "shims.d.ts",
@@ -18,5 +19,5 @@
     "testFiles": [
         "tests.ts"
     ],
-    "public": false
+    "public": true
 }
