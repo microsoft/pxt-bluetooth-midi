@@ -390,8 +390,8 @@ private:
 
     uint8_t midi[20];
 
-    BLEDevice *device;
-    GattCharacteristic *midiCharacteristic;    
+    BLEDevice &ble;
+    GattAttribute::Handle_t midiCharacteristicHandle;    
     Timer tick;
 };
 
