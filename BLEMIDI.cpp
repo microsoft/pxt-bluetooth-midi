@@ -296,7 +296,7 @@ BLEMIDI::BLEMIDI(BLEDevice *dev): ble(*dev) {
 
     midiCharacteristicHandle = midiCharacteristic.getValueHandle();
 
-    ble.onDataWritten(this, &BLEMIDI::onDataWritten);
+ //   ble.onDataWritten(this, &BLEMIDI::onDataWritten);
     tick.start();
 }
 
