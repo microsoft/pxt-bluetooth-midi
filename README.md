@@ -1,6 +1,6 @@
 # bluetooth-midi
 
-A Bluetooth low enery MIDI package for the @boardname@.
+A [Bluetooth low enery MIDI](https://www.midi.org/specifications/item/bluetooth-le-midi) package for the @boardname@.
 
 ### ~hint
 ![](/static/bluetooth/Bluetooth_SIG.png)
