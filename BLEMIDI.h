@@ -30,11 +30,6 @@ public:
      * Constructor
      */
     BLEMIDI(BLEDevice *device);
-    
-    /**
-     * Constructor with device name
-     */
-    BLEMIDI(BLEDevice *dev, const char *deviceName);
 
     /**
      * Check if a BLE MIDI device is connected
@@ -347,19 +342,7 @@ public:
      */
     void sendSystemExclusive(uint8_t * sysex, uint16_t length);
 
-    /**
-     * Notifies BLE disconnection to this BLE MIDI instance
-     */
-    void onBleDisconnection(Gap::Handle_t handle, Gap::DisconnectionReason_t reason);
-    
-    /**
-     * Notifies BLE connection to this BLE MIDI instance
-     */
-    void onBleConnection(Gap::Handle_t handle, Gap::addr_type_t type, const Gap::address_t addr, const Gap::ConnectionParams_t *params);
-
 private:
-    bool isConnected;
-
     uint16_t sysExBufferPos;
     uint8_t sysExBuffer[128];
     
@@ -403,7 +386,7 @@ private:
     void sendMidiMessage(uint8_t data0, uint8_t data1);
     void sendMidiMessage(uint8_t data0, uint8_t data1, uint8_t data2);
 
-    void dataWrittenCallback(const GattWriteCallbackParams *params);
+    void onDataWritten(const GattWriteCallbackParams *params);
 
     uint8_t midi[20];
 

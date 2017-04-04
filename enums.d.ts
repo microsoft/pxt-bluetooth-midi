@@ -2,7 +2,10 @@
 
 
     /**
-     * Notifies BLE connection to this BLE MIDI instance
+     * Send a `System Exclusive` event
+     *
+     * @param sysex the data starts with `0xf0` and ends with `0xf7`
+     * @param length
      */
 
     declare enum MIDI_STATE {

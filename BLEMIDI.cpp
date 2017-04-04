@@ -16,19 +16,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#include "mbed.h"
+#include "MicroBitConfig.h"
 #include "BLEMIDI.h"
 
-void BLEMIDI::onBleDisconnection(Gap::Handle_t handle, Gap::DisconnectionReason_t reason) {
-    device->startAdvertising();
-    isConnected = false;
-}
-
-void BLEMIDI::onBleConnection(Gap::Handle_t handle, Gap::addr_type_t type, const Gap::address_t addr, const Gap::ConnectionParams_t *params) {
-    isConnected = true;
-}
-
-void BLEMIDI::dataWrittenCallback(const GattWriteCallbackParams *params) {
+void BLEMIDI::onDataWritten(const GattWriteCallbackParams *params) {
     uint16_t length;
     uint8_t rxBuffer[20];
 
@@ -265,12 +256,7 @@ void BLEMIDI::dataWrittenCallback(const GattWriteCallbackParams *params) {
 }
 
 BLEMIDI::BLEMIDI(BLEDevice *dev) {
-    BLEMIDI(dev, "MIDI");
-}
-
-BLEMIDI::BLEMIDI(BLEDevice *dev, const char *deviceName) {
     device = dev;
-    isConnected = false;
     sysExBufferPos = 0;
 
     timestamp = 0;    
@@ -294,36 +280,35 @@ BLEMIDI::BLEMIDI(BLEDevice *dev, const char *deviceName) {
     };
 
     GattService midiService(UUID(serviceUuid), midiChars, sizeof(midiChars) / sizeof(GattCharacteristic *));
-    uint8_t uuid128_list[] = {
-        0x00, 0xc7, 0xc4, 0x4e, 0xe3, 0x6c, 0x51, 0xa7,
-        0x33, 0x4b, 0xe8, 0xed, 0x5a, 0x0e, 0xb8, 0x03
-    };
+    //uint8_t uuid128_list[] = {
+    //    0x00, 0xc7, 0xc4, 0x4e, 0xe3, 0x6c, 0x51, 0xa7,
+    //    0x33, 0x4b, 0xe8, 0xed, 0x5a, 0x0e, 0xb8, 0x03
+    //};
 
-    device->init();
-    
     /* setup callbacks */
-    device->onDataWritten(this, &BLEMIDI::dataWrittenCallback);
 
     device->addService(midiService);
 
-    /* setup advertising */
-    device->accumulateAdvertisingPayload(GapAdvertisingData::COMPLETE_LIST_128BIT_SERVICE_IDS, (uint8_t*)uuid128_list, sizeof(uuid128_list));
-    device->accumulateAdvertisingPayload(GapAdvertisingData::BREDR_NOT_SUPPORTED | GapAdvertisingData::LE_GENERAL_DISCOVERABLE);
-    device->accumulateAdvertisingPayload(GapAdvertisingData::COMPLETE_LOCAL_NAME, (uint8_t *)deviceName, sizeof(deviceName));
+    device->onDataWritten(this, &BLEMIDI::onDataWritten);
 
-    device->setAdvertisingType(GapAdvertisingParams::ADV_CONNECTABLE_UNDIRECTED);
-    device->setAdvertisingInterval(160); /* 100ms; in multiples of 0.625ms. */
+    /* setup advertising */
+    //device->accumulateAdvertisingPayload(GapAdvertisingData::COMPLETE_LIST_128BIT_SERVICE_IDS, (uint8_t*)uuid128_list, sizeof(uuid128_list));
+    //device->accumulateAdvertisingPayload(GapAdvertisingData::BREDR_NOT_SUPPORTED | GapAdvertisingData::LE_GENERAL_DISCOVERABLE);
+    //device->accumulateAdvertisingPayload(GapAdvertisingData::COMPLETE_LOCAL_NAME, (uint8_t *)deviceName, sizeof(deviceName));
+
+    //device->setAdvertisingType(GapAdvertisingParams::ADV_CONNECTABLE_UNDIRECTED);
+    //device->setAdvertisingInterval(160); /* 100ms; in multiples of 0.625ms. */
  
-    device->startAdvertising();
-    tick.start();
+    //device->startAdvertising();
+    //tick.start();
 }
 
 bool BLEMIDI::connected() {
-    return isConnected;
+    return device->getGapState().connected;
 }
 
 void BLEMIDI::sendMidiMessage(uint8_t data0) {
-    if (isConnected) {
+    if (connected()) {
         unsigned int ticks = tick.read_ms() & 0x1fff;
         midi[0] = 0x80 | ((ticks >> 7) & 0x3f);
         midi[1] = 0x80 | (ticks & 0x7f);
@@ -334,7 +319,7 @@ void BLEMIDI::sendMidiMessage(uint8_t data0) {
 }
 
 void BLEMIDI::sendMidiMessage(uint8_t data0, uint8_t data1) {
-    if (isConnected) {
+    if (connected()) {
         unsigned int ticks = tick.read_ms() & 0x1fff;
         midi[0] = 0x80 | ((ticks >> 7) & 0x3f);
         midi[1] = 0x80 | (ticks & 0x7f);
@@ -346,7 +331,7 @@ void BLEMIDI::sendMidiMessage(uint8_t data0, uint8_t data1) {
 }
 
 void BLEMIDI::sendMidiMessage(uint8_t data0, uint8_t data1, uint8_t data2) {
-    if (isConnected) {
+    if (connected()) {
         unsigned int ticks = tick.read_ms() & 0x1fff;
         midi[0] = 0x80 | ((ticks >> 7) & 0x3f);
         midi[1] = 0x80 | (ticks & 0x7f);
@@ -410,7 +395,7 @@ void BLEMIDI::sendSongPositionPointer(uint16_t position) {
     sendMidiMessage(0xf2, position & 0x7f, (position >> 7) & 0x7f);
 }
 void BLEMIDI::sendSystemExclusive(uint8_t * sysex, uint16_t length) {
-    if (isConnected) {
+    if (connected()) {
         uint8_t position = 0;
 
         // header

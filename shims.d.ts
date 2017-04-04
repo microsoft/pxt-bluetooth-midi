@@ -8,6 +8,12 @@
 declare namespace midi {
 
     /**
+     * Starts the MIDI service
+     */
+    //% block shim=midi::startBluetoothService
+    function startBluetoothService(): void;
+
+    /**
      * Send a `Note On` event
      * @param channel 0-15
      * @param note 0-127

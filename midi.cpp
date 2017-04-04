@@ -15,6 +15,14 @@ namespace midi {
     }
 
     /**
+    * Starts the MIDI service
+    */
+    //% block
+    void startBluetoothService() {
+        getMidi();
+    }
+
+    /**
      * Send a `Note On` event
      * @param channel 0-15
      * @param note 0-127
