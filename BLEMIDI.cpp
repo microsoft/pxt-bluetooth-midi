@@ -34,9 +34,9 @@ const uint8_t midiServiceUuid[] = {
 };
 
 void BLEMIDI::onDataWritten(const GattWriteCallbackParams *params) {
-    uBit.serial.send("midi:onDataWritten\n");
+    if (midiCharacteristicHandle != params->handle)
+        return;
     uint16_t length;
-
     ble.readCharacteristicValue(midiCharacteristicHandle, rxBuffer, &length);
     if (length > 1) {
         // parse BLE message
@@ -296,7 +296,7 @@ BLEMIDI::BLEMIDI(BLEDevice *dev): ble(*dev) {
 
     midiCharacteristicHandle = midiCharacteristic.getValueHandle();
 
- //   ble.onDataWritten(this, &BLEMIDI::onDataWritten);
+    ble.onDataWritten(this, &BLEMIDI::onDataWritten);
     tick.start();
 }
 
