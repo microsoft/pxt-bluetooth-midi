@@ -22,7 +22,7 @@ namespace midi {
      */
     //% block
     //% channel.min=0 channel.max=15 note.min=0 note.max=127 velocity.min=0 velocity.max=127
-    void sendNoteOn(uint8_t channel, uint8_t note, uint8_t velocity) {
+    void noteOn(uint8_t channel, uint8_t note, uint8_t velocity) {
         getMidi()->sendNoteOn(channel, note, velocity);
     }
 
@@ -34,7 +34,7 @@ namespace midi {
      */
     //% block
     //% channel.min=0 channel.max=15 note.min=0 note.max=127 velocity.min=0 velocity.max=127
-    void sendNoteOff(uint8_t channel, uint8_t note, uint8_t velocity) {
+    void noteOff(uint8_t channel, uint8_t note, uint8_t velocity) {
         getMidi()->sendNoteOff(channel, note, velocity);
     }
 }
