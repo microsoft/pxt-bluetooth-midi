@@ -13,5 +13,7 @@
     MIDI_STATE_SIGNAL_3BYTES_3 = 4,
     MIDI_STATE_SIGNAL_SYSEX = 5,
     }
+declare namespace midi {
+}
 
 // Auto-generated. Do not edit. Really.
