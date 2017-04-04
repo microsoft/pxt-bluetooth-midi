@@ -11,8 +11,7 @@
         "README.md",
         "BLEMIDI.cpp",
         "BLEMIDI.h",
-        "extension.cpp",
-        "extension.ts",
+        "midi.cpp",
         "shims.d.ts",
         "enums.d.ts"
     ],
