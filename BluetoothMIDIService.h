@@ -24,12 +24,12 @@
 /** 
  * A class to communicate a BLE MIDI device
  */
-class BLEMIDI {
+class BluetoothMIDIService {
 public:
     /**
      * Constructor
      */
-    BLEMIDI(BLEDevice *device);
+    BluetoothMIDIService(BLEDevice *device);
 
     /**
      * Check if a BLE MIDI device is connected

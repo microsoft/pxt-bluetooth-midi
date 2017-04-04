@@ -1,16 +1,16 @@
 #include "pxt.h"
-#include "BLEMIDI.h"
+#include "BluetoothMIDIService.h"
 using namespace pxt;
 /**
 * A set of functions to send MIDI commands over Bluetooth
 */
 namespace midi {
-    BLEMIDI* pMidi;
+    BluetoothMIDIService* pMidi;
 
-    BLEMIDI* getMidi() 
+    BluetoothMIDIService* getMidi() 
     {
         if (NULL == pMidi) 
-            pMidi = new BLEMIDI(uBit.ble);
+            pMidi = new BluetoothMIDIService(uBit.ble);
         return pMidi;
     }
 

@@ -18,7 +18,7 @@
 
 #include "MicroBit.h"
 #include "pxt.h"
-#include "BLEMIDI.h"
+#include "BluetoothMIDIService.h"
 
 
     // MIDI characteristic
@@ -33,7 +33,7 @@ const uint8_t midiServiceUuid[] = {
         0xa7, 0x51, 0x6c, 0xe3, 0x4e, 0xc4, 0xc7, 0x00
 };
 
-void BLEMIDI::onDataWritten(const GattWriteCallbackParams *params) {
+void BluetoothMIDIService::onDataWritten(const GattWriteCallbackParams *params) {
     if (midiCharacteristicHandle != params->handle)
         return;
     uint16_t length;
@@ -268,7 +268,7 @@ void BLEMIDI::onDataWritten(const GattWriteCallbackParams *params) {
     }
 }
 
-BLEMIDI::BLEMIDI(BLEDevice *dev): ble(*dev) {
+BluetoothMIDIService::BluetoothMIDIService(BLEDevice *dev): ble(*dev) {
     sysExBufferPos = 0;
 
     timestamp = 0;    
@@ -296,15 +296,15 @@ BLEMIDI::BLEMIDI(BLEDevice *dev): ble(*dev) {
 
     midiCharacteristicHandle = midiCharacteristic.getValueHandle();
 
-    ble.onDataWritten(this, &BLEMIDI::onDataWritten);
+    ble.onDataWritten(this, &BluetoothMIDIService::onDataWritten);
     tick.start();
 }
 
-bool BLEMIDI::connected() {
+bool BluetoothMIDIService::connected() {
     return ble.getGapState().connected;
 }
 
-void BLEMIDI::sendMidiMessage(uint8_t data0) {
+void BluetoothMIDIService::sendMidiMessage(uint8_t data0) {
     if (connected()) {
         unsigned int ticks = tick.read_ms() & 0x1fff;
         midi[0] = 0x80 | ((ticks >> 7) & 0x3f);
@@ -315,7 +315,7 @@ void BLEMIDI::sendMidiMessage(uint8_t data0) {
     }
 }
 
-void BLEMIDI::sendMidiMessage(uint8_t data0, uint8_t data1) {
+void BluetoothMIDIService::sendMidiMessage(uint8_t data0, uint8_t data1) {
     if (connected()) {
         unsigned int ticks = tick.read_ms() & 0x1fff;
         midi[0] = 0x80 | ((ticks >> 7) & 0x3f);
@@ -327,7 +327,7 @@ void BLEMIDI::sendMidiMessage(uint8_t data0, uint8_t data1) {
     }
 }
 
-void BLEMIDI::sendMidiMessage(uint8_t data0, uint8_t data1, uint8_t data2) {
+void BluetoothMIDIService::sendMidiMessage(uint8_t data0, uint8_t data1, uint8_t data2) {
     if (connected()) {
         uBit.serial.send("midi:sendmsg\n");
         unsigned int ticks = tick.read_ms() & 0x1fff;
@@ -341,58 +341,58 @@ void BLEMIDI::sendMidiMessage(uint8_t data0, uint8_t data1, uint8_t data2) {
     }
 }
 
-void BLEMIDI::sendTuneRequest() {
+void BluetoothMIDIService::sendTuneRequest() {
     sendMidiMessage(0xf6);
 }
-void BLEMIDI::sendTimingClock() {
+void BluetoothMIDIService::sendTimingClock() {
     sendMidiMessage(0xf8);
 }
-void BLEMIDI::sendStart() {
+void BluetoothMIDIService::sendStart() {
     sendMidiMessage(0xfa);
 }
-void BLEMIDI::sendContinue() {
+void BluetoothMIDIService::sendContinue() {
     sendMidiMessage(0xfb);
 }
-void BLEMIDI::sendStop() {
+void BluetoothMIDIService::sendStop() {
     sendMidiMessage(0xfc);
 }
-void BLEMIDI::sendActiveSensing() {
+void BluetoothMIDIService::sendActiveSensing() {
     sendMidiMessage(0xfe);
 }
-void BLEMIDI::sendReset() {
+void BluetoothMIDIService::sendReset() {
     sendMidiMessage(0xff);
 }
-void BLEMIDI::sendProgramChange(uint8_t channel, uint8_t program) {
+void BluetoothMIDIService::sendProgramChange(uint8_t channel, uint8_t program) {
     sendMidiMessage(0xc0 | (channel & 0xf), program);
 }
-void BLEMIDI::sendChannelAftertouch(uint8_t channel, uint8_t pressure) {
+void BluetoothMIDIService::sendChannelAftertouch(uint8_t channel, uint8_t pressure) {
     sendMidiMessage(0xd0 | (channel & 0xf), pressure);
 }
-void BLEMIDI::sendTimeCodeQuarterFrame(uint8_t timing) {
+void BluetoothMIDIService::sendTimeCodeQuarterFrame(uint8_t timing) {
     sendMidiMessage(0xf1, timing & 0x7f);
 }
-void BLEMIDI::sendSongSelect(uint8_t song) {
+void BluetoothMIDIService::sendSongSelect(uint8_t song) {
     sendMidiMessage(0xf3, song & 0x7f);
 }
-void BLEMIDI::sendNoteOff(uint8_t channel, uint8_t note, uint8_t velocity) {
+void BluetoothMIDIService::sendNoteOff(uint8_t channel, uint8_t note, uint8_t velocity) {
     sendMidiMessage(0x80 | (channel & 0xf), note, velocity);
 }
-void BLEMIDI::sendNoteOn(uint8_t channel, uint8_t note, uint8_t velocity) {
+void BluetoothMIDIService::sendNoteOn(uint8_t channel, uint8_t note, uint8_t velocity) {
     sendMidiMessage(0x90 | (channel & 0xf), note, velocity);
 }
-void BLEMIDI::sendPolyphonicAftertouch(uint8_t channel, uint8_t note, uint8_t pressure) {
+void BluetoothMIDIService::sendPolyphonicAftertouch(uint8_t channel, uint8_t note, uint8_t pressure) {
     sendMidiMessage(0xa0 | (channel & 0xf), note, pressure);
 }
-void BLEMIDI::sendControlChange(uint8_t channel, uint8_t function, uint8_t value) {
+void BluetoothMIDIService::sendControlChange(uint8_t channel, uint8_t function, uint8_t value) {
     sendMidiMessage(0xb0 | (channel & 0xf), function, value);
 }
-void BLEMIDI::sendPitchWheel(uint8_t channel, uint16_t amount) {
+void BluetoothMIDIService::sendPitchWheel(uint8_t channel, uint16_t amount) {
     sendMidiMessage(0xe0 | (channel & 0xf), amount & 0x7f, (amount >> 7) & 0x7f);
 }
-void BLEMIDI::sendSongPositionPointer(uint16_t position) {
+void BluetoothMIDIService::sendSongPositionPointer(uint16_t position) {
     sendMidiMessage(0xf2, position & 0x7f, (position >> 7) & 0x7f);
 }
-void BLEMIDI::sendSystemExclusive(uint8_t * sysex, uint16_t length) {
+void BluetoothMIDIService::sendSystemExclusive(uint8_t * sysex, uint16_t length) {
     uBit.serial.send("midi:sendsystem\n");
     if (connected()) {
         uint8_t position = 0;

@@ -9,8 +9,8 @@
     },
     "files": [
         "README.md",
-        "BLEMIDI.cpp",
-        "BLEMIDI.h",
+        "BluetoothMIDIService.cpp",
+        "BluetoothMIDIService.h",
         "midi.cpp",
         "shims.d.ts",
         "enums.d.ts"
