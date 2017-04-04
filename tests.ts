@@ -5,6 +5,7 @@ bluetooth.onBluetoothDisconnected(() => {
     basic.showString("D")
 })
 midi.startBluetoothService();
+basic.showString("S")
 input.onButtonPressed(Button.A, () => {
     basic.clearScreen();
     // https://www.arduino.cc/en/tutorial/midi

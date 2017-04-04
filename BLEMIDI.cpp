@@ -39,9 +39,6 @@ void BLEMIDI::onDataWritten(const GattWriteCallbackParams *params) {
     uint8_t rxBuffer[20];
 
     ble.readCharacteristicValue(midiCharacteristicHandle, rxBuffer, &length);
-
-    uBit.serial.send(rxBuffer, length);
-    uBit.serial.send("\n");
     if (length > 1) {
         // parse BLE message
         uint8_t header = rxBuffer[0];
@@ -280,8 +277,18 @@ BLEMIDI::BLEMIDI(BLEDevice *dev): ble(*dev) {
     midiEventNote = 0;
     midiEventVelocity = 0;
 
-    GattCharacteristic midiCharacteristic(midiCharacteristicUuid, midi, 0, 20, GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_WRITE | GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_WRITE_WITHOUT_RESPONSE | GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_READ | GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_NOTIFY);
+    memset(midi, 0, sizeof(midi));
+    memset(sysExBuffer, 0, sizeof(sysExBuffer));
+
+    GattCharacteristic midiCharacteristic(midiCharacteristicUuid, midi, 0, sizeof(midi), 
+        GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_WRITE 
+        | GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_WRITE_WITHOUT_RESPONSE 
+        | GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_READ 
+        | GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_NOTIFY
+        );
     GattCharacteristic *midiChars[] = {&midiCharacteristic};
+
+    midiCharacteristic.requireSecurity(SecurityManager::MICROBIT_BLE_SECURITY_LEVEL);
 
     GattService midiService(midiServiceUuid, midiChars, sizeof(midiChars) / sizeof(GattCharacteristic *));
 
@@ -322,6 +329,7 @@ void BLEMIDI::sendMidiMessage(uint8_t data0, uint8_t data1) {
 
 void BLEMIDI::sendMidiMessage(uint8_t data0, uint8_t data1, uint8_t data2) {
     if (connected()) {
+        uBit.serial.send("midi:sendmsg\n");
         unsigned int ticks = tick.read_ms() & 0x1fff;
         midi[0] = 0x80 | ((ticks >> 7) & 0x3f);
         midi[1] = 0x80 | (ticks & 0x7f);

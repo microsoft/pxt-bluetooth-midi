@@ -351,6 +351,11 @@ private:
     uint8_t midiEventKind;
     uint8_t midiEventNote;
     uint8_t midiEventVelocity;
+    uint8_t midi[20];
+
+    BLEDevice &ble;
+    GattAttribute::Handle_t midiCharacteristicHandle;    
+    Timer tick;
 
     enum MIDI_STATE {
         MIDI_STATE_TIMESTAMP = 0,
@@ -387,12 +392,6 @@ private:
     void sendMidiMessage(uint8_t data0, uint8_t data1, uint8_t data2);
 
     void onDataWritten(const GattWriteCallbackParams *params);
-
-    uint8_t midi[20];
-
-    BLEDevice &ble;
-    GattAttribute::Handle_t midiCharacteristicHandle;    
-    Timer tick;
 };
 
 #endif /* __BLEMIDI_H__ */
