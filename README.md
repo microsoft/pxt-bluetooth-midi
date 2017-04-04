@@ -1,6 +1,10 @@
 # bluetooth-midi
 
+** WORK IN PROGRESS **
 
+A BLE MIDI package for the micro:bit.
+
+* status: crashing
 
 ## License
 
