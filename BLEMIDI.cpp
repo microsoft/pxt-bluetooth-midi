@@ -36,7 +36,6 @@ const uint8_t midiServiceUuid[] = {
 void BLEMIDI::onDataWritten(const GattWriteCallbackParams *params) {
     uBit.serial.send("midi:onDataWritten\n");
     uint16_t length;
-    uint8_t rxBuffer[20];
 
     ble.readCharacteristicValue(midiCharacteristicHandle, rxBuffer, &length);
     if (length > 1) {
@@ -279,6 +278,7 @@ BLEMIDI::BLEMIDI(BLEDevice *dev): ble(*dev) {
 
     memset(midi, 0, sizeof(midi));
     memset(sysExBuffer, 0, sizeof(sysExBuffer));
+    memset(rxBuffer, 0, sizeof(rxBuffer));
 
     GattCharacteristic midiCharacteristic(midiCharacteristicUuid, midi, 0, sizeof(midi), 
         GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_WRITE 

@@ -352,6 +352,7 @@ private:
     uint8_t midiEventNote;
     uint8_t midiEventVelocity;
     uint8_t midi[20];
+    uint8_t rxBuffer[20];
 
     BLEDevice &ble;
     GattAttribute::Handle_t midiCharacteristicHandle;    
