@@ -296,7 +296,7 @@ BluetoothMIDIService::BluetoothMIDIService(BLEDevice *dev): ble(*dev) {
 
     midiCharacteristicHandle = midiCharacteristic.getValueHandle();
 
-    ble.onDataWritten(this, &BluetoothMIDIService::onDataWritten);
+  //  ble.onDataWritten(this, &BluetoothMIDIService::onDataWritten);
     tick.start();
 }
 

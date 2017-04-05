@@ -16,7 +16,7 @@ input.onButtonPressed(Button.A, () => {
         midi.noteOn(0x90, note, 0x45);
         basic.pause(100);
         //Note on channel 1 (0x90), some note value (note), silent velocity (0x00):
-        midi.noteOn(0x90, note, 0x00);
+        midi.noteOff(0x90, note, 0x00);
         basic.pause(100);
     }
 })
