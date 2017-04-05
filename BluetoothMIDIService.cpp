@@ -393,7 +393,6 @@ void BluetoothMIDIService::sendSongPositionPointer(uint16_t position) {
     sendMidiMessage(0xf2, position & 0x7f, (position >> 7) & 0x7f);
 }
 void BluetoothMIDIService::sendSystemExclusive(uint8_t * sysex, uint16_t length) {
-    uBit.serial.send("midi:sendsystem\n");
     if (connected()) {
         uint8_t position = 0;
 
