@@ -14,11 +14,8 @@ namespace bluetooth {
         return pMidi;
     }
 
-    /**
-    * Sends a MIDI message
-    */
-    //% advanced=true
-    void internalMidiSendMessage(Buffer data) {
+    //%
+    void midiSendMessage(Buffer data) {
         BluetoothMIDIService* pMidi = getMidi();    
         ManagedBuffer buf(data);
         switch(buf.length()) {

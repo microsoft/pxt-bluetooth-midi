@@ -15,7 +15,7 @@ namespace bluetooth {
     /**
      * Sends a MIDI message
      */
-    //% shim=bluetooth::internalMidiSendMessage
+    //% shim=bluetooth::midiSendMessage
     //% advanced=true
     export function midiSendMessage(data: Buffer) {
     }
