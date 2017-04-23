@@ -10,10 +10,10 @@
     },
     "files": [
         "README.md",
+        "bluetooth.ts",
         "BluetoothMIDIService.cpp",
         "BluetoothMIDIService.h",
         "midi.cpp",
-        "bluetooth.ts",
         "shims.d.ts",
         "enums.d.ts"
     ],

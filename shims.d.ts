@@ -10,8 +10,8 @@ declare namespace bluetooth {
     /**
      * Sends a MIDI message
      */
-    //% shim=TD_ID shim=bluetooth::midiSendMessage
-    function midiSendMessage(data: Buffer): void;
+    //% advanced=true shim=bluetooth::internalMidiSendMessage
+    function internalMidiSendMessage(data: Buffer): void;
 }
 
 // Auto-generated. Do not edit. Really.

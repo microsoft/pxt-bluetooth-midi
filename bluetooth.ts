@@ -11,4 +11,12 @@ namespace bluetooth {
         midi.setInputTransport(send);
         bluetooth.midiSendMessage(pins.createBuffer(0));
     }
+
+    /**
+     * Sends a MIDI message
+     */
+    //% shim=bluetooth::internalMidiSendMessage
+    //% advanced=true
+    export function midiSendMessage(data: Buffer) {
+    }
 }
