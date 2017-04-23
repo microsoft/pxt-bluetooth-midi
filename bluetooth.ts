@@ -18,5 +18,6 @@ namespace bluetooth {
     //% shim=bluetooth::midiSendMessage
     //% advanced=true
     export function midiSendMessage(data: Buffer) {
+        return;
     }
 }
