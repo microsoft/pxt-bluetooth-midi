@@ -1,10 +1,12 @@
 bluetooth.onBluetoothConnected(() => {
     basic.showString("C")
+    midi.playTone(439, 500);
 })
 bluetooth.onBluetoothDisconnected(() => {
     basic.showString("D")
 })
 bluetooth.startMidiService();
+midi.playTone(401, 500);
 basic.showString("S")
 input.onButtonPressed(Button.A, () => {
     basic.clearScreen();
