@@ -19,7 +19,7 @@ Place a ``||bluetooth start midi service||`` block in your program to enable MDI
 bluetooth.startMidiService();
 ```
 
-This library uses the [MIDI package](pxt.microbit.org/pkg/microsoft/pxt-midi). 
+This library uses the [MIDI package](/pkg/microsoft/pxt-midi). 
 Please refer to that project documentation for further details.
 
 ## Apps
