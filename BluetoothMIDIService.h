@@ -342,6 +342,11 @@ public:
      */
     void sendSystemExclusive(uint8_t * sysex, uint16_t length);
 
+
+    void sendMidiMessage(uint8_t data0);
+    void sendMidiMessage(uint8_t data0, uint8_t data1);
+    void sendMidiMessage(uint8_t data0, uint8_t data1, uint8_t data2);
+
 private:
     uint16_t sysExBufferPos;
     uint8_t sysExBuffer[128];
@@ -387,10 +392,6 @@ private:
     void (*onPitchWheel)(uint8_t, uint16_t);
     void (*onSongPositionPointer)(uint16_t);
     void (*onSystemExclusive)(uint8_t *, uint16_t, bool);
-
-    void sendMidiMessage(uint8_t data0);
-    void sendMidiMessage(uint8_t data0, uint8_t data1);
-    void sendMidiMessage(uint8_t data0, uint8_t data1, uint8_t data2);
 
     void onDataWritten(const GattWriteCallbackParams *params);
 };

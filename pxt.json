@@ -5,13 +5,15 @@
     "license": "MIT",
     "dependencies": {
         "core": "*",
-        "bluetooth": "*"
+        "bluetooth": "*",
+        "midi": "github:Microsoft/pxt-midi#v0.0.4"
     },
     "files": [
         "README.md",
         "BluetoothMIDIService.cpp",
         "BluetoothMIDIService.h",
         "midi.cpp",
+        "bluetooth.ts",
         "shims.d.ts",
         "enums.d.ts"
     ],
