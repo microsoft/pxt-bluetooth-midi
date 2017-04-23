@@ -329,7 +329,6 @@ void BluetoothMIDIService::sendMidiMessage(uint8_t data0, uint8_t data1) {
 
 void BluetoothMIDIService::sendMidiMessage(uint8_t data0, uint8_t data1, uint8_t data2) {
     if (connected()) {
-        uBit.serial.send("midi:sendmsg\n");
         unsigned int ticks = tick.read_ms() & 0x1fff;
         midi[0] = 0x80 | ((ticks >> 7) & 0x3f);
         midi[1] = 0x80 | (ticks & 0x7f);
