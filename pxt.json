@@ -6,7 +6,7 @@
     "dependencies": {
         "core": "*",
         "bluetooth": "*",
-        "midi": "github:Microsoft/pxt-midi#v1.1.3"
+        "midi": "github:Microsoft/pxt-midi#v1.1.4"
     },
     "files": [
         "README.md",
