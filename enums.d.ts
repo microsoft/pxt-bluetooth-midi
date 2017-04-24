@@ -2,10 +2,10 @@
 
 
     /**
-     * Send a `System Exclusive` event
+     * Attach a callback called when the `System Exclusive` event is received
      *
-     * @param sysex the data starts with `0xf0` and ends with `0xf7`
-     * @param length
+     * @param ptr function pointer
+     *   prototype: void onSystemExclusive(uint8_t *sysex, uint16_t length, bool hasNextData);
      */
 
     declare enum MIDI_STATE {

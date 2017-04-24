@@ -5,27 +5,26 @@ bluetooth.onBluetoothDisconnected(() => {
     basic.showString("D")
 })
 bluetooth.startMidiService();
+
 basic.showString("S")
-let channel = 1;
+basic.forever(() => {
+    midi.inputChannel(1).pitchBend(Math.abs(input.acceleration(Dimension.X)));
+    basic.pause(50);
+})
 input.onButtonPressed(Button.A, () => {
     basic.clearScreen();
-    let piano = midi.inputChannel(channel);
-    for (let note = 0x0; note < 0x5A; note++) {
-        led.toggle(0, 0);
-        piano.noteOn(note);
-        basic.pause(100);
-        piano.noteOff(note);
-        basic.pause(100);
-    }
+    led.toggle(0, 0);
+    midi.playTone(Note.A, music.beat())
+    midi.playTone(Note.B, music.beat())
+    midi.playTone(Note.C, music.beat())
+    midi.playTone(Note.D, music.beat())
+    midi.playTone(Note.E, music.beat())
 })
 input.onButtonPressed(Button.B, () => {
-    channel += 1;
-    basic.showNumber(channel);
-})
-input.onButtonPressed(Button.AB, () => {
     basic.clearScreen();
     for (let note = 0; note < 127; note++) {
         led.toggle(1, 1);
         midi.playDrum(note);
+        basic.pause(100);
     }
 })
