@@ -8,7 +8,7 @@ namespace bluetooth {
         function send(buffer: Buffer) {
             bluetooth.midiSendMessage(buffer);
         }
-        midi.setInputTransport(send);
+        midi.setTransport(send);
         bluetooth.midiSendMessage(pins.createBuffer(0));
     }
 

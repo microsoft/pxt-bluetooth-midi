@@ -1,12 +1,12 @@
 {
     "name": "bluetooth-midi",
-    "version": "1.1.13",
+    "version": "2.0.0",
     "description": "A Bluetooth MIDI service",
     "license": "MIT",
     "dependencies": {
         "core": "*",
         "bluetooth": "*",
-        "midi": "github:Microsoft/pxt-midi#v1.1.6"
+        "midi": "github:Microsoft/pxt-midi#v2.0.1"
     },
     "files": [
         "README.md",

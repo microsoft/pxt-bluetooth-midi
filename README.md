@@ -24,8 +24,9 @@ Please refer to that project documentation for further details.
 
 ## Apps
 
+Any app that supports a MIDI keyboard or instrument should work.
+
 * iPhone/iPad: [Apple GarageBand](https://itunes.apple.com/us/app/garageband/id408709785?mt=8)
-* iPhone/iPad: [KORG Module Le](https://itunes.apple.com/us/app/korg-module-le/id1048875111)
 
 ## Supported targets
 

@@ -8,7 +8,7 @@ bluetooth.startMidiService();
 
 basic.showString("S")
 basic.forever(() => {
-    midi.inputChannel(1).pitchBend(Math.abs(input.acceleration(Dimension.X)));
+    midi.pitchBend(Math.abs(input.acceleration(Dimension.X)));
     basic.pause(50);
 })
 input.onButtonPressed(Button.A, () => {
