@@ -1,6 +1,8 @@
 # bluetooth-midi
 
-A [Bluetooth low enery MIDI](https://www.midi.org/specifications/item/bluetooth-le-midi) package for the @boardname@.
+A [Bluetooth low enery MIDI](https://www.midi.org/specifications/item/bluetooth-le-midi) 
+support for the @boardname@.
+**iOS only currently**.
 
 ### ~hint
 ![](/static/bluetooth/Bluetooth_SIG.png)
@@ -22,8 +24,9 @@ bluetooth.startMidiService();
 This library uses the [MIDI package](/pkg/microsoft/pxt-midi). 
 Please refer to that project documentation for further details.
 
-## Apps
+## Supported Platforms
 
+This package is currently only supported on iOS (iPad/iPhone). 
 Any app that supports a MIDI keyboard or instrument should work.
 
 * iPhone/iPad: [Apple GarageBand](https://itunes.apple.com/us/app/garageband/id408709785?mt=8)
