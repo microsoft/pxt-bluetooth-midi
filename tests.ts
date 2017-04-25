@@ -7,10 +7,6 @@ bluetooth.onBluetoothDisconnected(() => {
 bluetooth.startMidiService();
 
 basic.showString("S")
-basic.forever(() => {
-    midi.pitchBend(Math.abs(input.acceleration(Dimension.X)));
-    basic.pause(50);
-})
 input.onButtonPressed(Button.A, () => {
     basic.clearScreen();
     led.toggle(0, 0);

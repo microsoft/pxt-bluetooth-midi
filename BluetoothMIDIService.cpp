@@ -21,25 +21,25 @@
 #include "BluetoothMIDIService.h"
 
 
-    // MIDI characteristic
+// MIDI characteristic
 const uint8_t midiCharacteristicUuid[] = {
         0x77, 0x72, 0xe5, 0xdb, 0x38, 0x68, 0x41, 0x12, 
         0xa1, 0xa9, 0xf2, 0x66, 0x9d, 0x10, 0x6b, 0xf3
 };
 
-    // MIDI service
+// MIDI service
 const uint8_t midiServiceUuid[] = {
         0x03, 0xb8, 0x0e, 0x5a, 0xed, 0xe8, 0x4b, 0x33, 
         0xa7, 0x51, 0x6c, 0xe3, 0x4e, 0xc4, 0xc7, 0x00
 };
 
 BluetoothMIDIService::BluetoothMIDIService(BLEDevice *dev): ble(*dev) {
-    timestamp = 0;    
-
+    timestamp = 0;
     memset(midi, 0, sizeof(midi));
+    firstRead = true;
 
     GattCharacteristic midiCharacteristic(midiCharacteristicUuid, midi, 0, sizeof(midi), 
-        GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_READ 
+          GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_READ
         | GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_NOTIFY
         );
     GattCharacteristic *midiChars[] = {&midiCharacteristic};
@@ -52,7 +52,27 @@ BluetoothMIDIService::BluetoothMIDIService(BLEDevice *dev): ble(*dev) {
 
     midiCharacteristicHandle = midiCharacteristic.getValueHandle();
 
+    ble.gattServer().onDataRead(this, &BluetoothMIDIService::onDataRead);
+    ble.onDisconnection(this, &BluetoothMIDIService::onDisconnection);
+
     tick.start();
+}
+
+void BluetoothMIDIService::onDataRead(const GattReadCallbackParams* params) 
+{
+    if (params->handle == midiCharacteristicHandle) 
+    {
+        if (firstRead) {
+            // send empty payload upon first connect
+            ble.updateCharacteristicValue(midiCharacteristicHandle, midi, 0);        
+            firstRead = false;
+        }
+    }
+}
+
+void BluetoothMIDIService::onDisconnection(const Gap::DisconnectionCallbackParams_t* params) {
+    // clear read bit
+    firstRead = true;
 }
 
 bool BluetoothMIDIService::connected() {

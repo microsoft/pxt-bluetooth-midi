@@ -43,9 +43,12 @@ public:
     void sendMidiMessage(uint8_t data0, uint8_t data1, uint8_t data2);
 
 private:    
-    uint16_t timestamp;
+    void onDataRead(const GattReadCallbackParams* params);
+    void onDisconnection(const Gap::DisconnectionCallbackParams_t* params);
 
-    uint8_t midi[20];
+    uint16_t timestamp;
+    uint8_t midi[5];
+    bool firstRead;
 
     BLEDevice &ble;
     GattAttribute::Handle_t midiCharacteristicHandle;    

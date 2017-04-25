@@ -5,11 +5,10 @@ using namespace pxt;
 * A set of functions to send MIDI commands over Bluetooth
 */
 namespace bluetooth {
-    BluetoothMIDIService* pMidi;
-
+    BluetoothMIDIService* pMidi = NULL;
     BluetoothMIDIService* getMidi() 
     {
-        if (NULL == pMidi) 
+        if (NULL == pMidi)
             pMidi = new BluetoothMIDIService(uBit.ble);
         return pMidi;
     }
