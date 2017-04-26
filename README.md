@@ -47,6 +47,6 @@ This project has adopted the [Microsoft Open Source Code of Conduct](https://ope
 
 ```package
 bluetooth
-midi=microsoft/pxt-midi
-bluetooth-midi=microsoft/pxt-bluetooth-midi
+midi=github:microsoft/pxt-midi
+bluetooth-midi=github:microsoft/pxt-bluetooth-midi
 ```
