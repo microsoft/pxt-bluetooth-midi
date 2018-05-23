@@ -34,6 +34,7 @@ Any app that supports a MIDI keyboard or instrument should work.
 ## Supported targets
 
 * for PXT/microbit
+* for PXT/calliope
 
 (The metadata above is needed for package search.)
 
