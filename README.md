@@ -1,4 +1,4 @@
-# bluetooth-midi
+# bluetooth-midi [![Build Status](https://travis-ci.org/Microsoft/pxt-bluetooth-midi.svg?branch=master)](https://travis-ci.org/Microsoft/pxt-bluetooth-midi)
 
 A [Bluetooth low enery MIDI](https://www.midi.org/specifications/item/bluetooth-le-midi) 
 support for the @boardname@.
@@ -44,9 +44,3 @@ MIT
 ## Code of Conduct
 
 This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
-
-```package
-bluetooth
-midi=github:microsoft/pxt-midi
-bluetooth-midi=github:microsoft/pxt-bluetooth-midi
-```
