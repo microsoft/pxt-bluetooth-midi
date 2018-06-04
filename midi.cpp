@@ -15,9 +15,9 @@ namespace bluetooth {
 
     //%
     void midiSendMessage(Buffer data) {
-        BluetoothMIDIService* pMidi = getMidi();    
-        ManagedBuffer buf(data);
-        switch(buf.length()) {
+        BluetoothMIDIService* pMidi = getMidi();            
+        auto buf = data->payload;
+        switch(data->length) {
             case 1: 
                 pMidi->sendMidiMessage(buf[0]);
                 break;
