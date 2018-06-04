@@ -1,6 +1,11 @@
 #include "pxt.h"
 #include "BluetoothMIDIService.h"
 using namespace pxt;
+
+// v0 backward compat support
+#ifndef PXT_BUFFER_DATA
+#define PXT_BUFFER_DATA(buffer) buffer->payload
+#endif
 /**
 * A set of functions to send MIDI commands over Bluetooth
 */
@@ -16,7 +21,8 @@ namespace bluetooth {
     //%
     void midiSendMessage(Buffer data) {
         BluetoothMIDIService* pMidi = getMidi();            
-        auto buf = data->payload;
+        auto buf = PXT_BUFFER_DATA(data);
+        
         switch(data->length) {
             case 1: 
                 pMidi->sendMidiMessage(buf[0]);
