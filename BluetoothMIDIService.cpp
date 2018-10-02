@@ -35,10 +35,10 @@ const uint8_t midiServiceUuid[] = {
 
 BluetoothMIDIService::BluetoothMIDIService(BLEDevice *dev): ble(*dev) {
     timestamp = 0;
-    memset(midi, 0, sizeof(midi));
+    memset(midiBuffer, 0, sizeof(midiBuffer));
     firstRead = true;
 
-    GattCharacteristic midiCharacteristic(midiCharacteristicUuid, midi, 0, sizeof(midi), 
+    GattCharacteristic midiCharacteristic(midiCharacteristicUuid, midiBuffer, 0, sizeof(midiBuffer), 
           GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_READ
         | GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_NOTIFY
         );
@@ -64,7 +64,7 @@ void BluetoothMIDIService::onDataRead(const GattReadCallbackParams* params)
     {
         if (firstRead) {
             // send empty payload upon first connect
-            ble.updateCharacteristicValue(midiCharacteristicHandle, midi, 0);        
+            ble.gattServer().notify(midiCharacteristicHandle, (uint8_t *)midiBuffer, 0);
             firstRead = false;
         }
     }
@@ -82,35 +82,35 @@ bool BluetoothMIDIService::connected() {
 void BluetoothMIDIService::sendMidiMessage(uint8_t data0) {
     if (connected()) {
         unsigned int ticks = tick.read_ms() & 0x1fff;
-        midi[0] = 0x80 | ((ticks >> 7) & 0x3f);
-        midi[1] = 0x80 | (ticks & 0x7f);
-        midi[2] = data0;
+        midiBuffer[0] = 0x80 | ((ticks >> 7) & 0x3f);
+        midiBuffer[1] = 0x80 | (ticks & 0x7f);
+        midiBuffer[2] = data0;
         
-        ble.updateCharacteristicValue(midiCharacteristicHandle, midi, 3);
+        ble.gattServer().notify(midiCharacteristicHandle, (uint8_t *)midiBuffer, 3);
     }
 }
 
 void BluetoothMIDIService::sendMidiMessage(uint8_t data0, uint8_t data1) {
     if (connected()) {
         unsigned int ticks = tick.read_ms() & 0x1fff;
-        midi[0] = 0x80 | ((ticks >> 7) & 0x3f);
-        midi[1] = 0x80 | (ticks & 0x7f);
-        midi[2] = data0;
-        midi[3] = data1;
+        midiBuffer[0] = 0x80 | ((ticks >> 7) & 0x3f);
+        midiBuffer[1] = 0x80 | (ticks & 0x7f);
+        midiBuffer[2] = data0;
+        midiBuffer[3] = data1;
         
-        ble.updateCharacteristicValue(midiCharacteristicHandle, midi, 4);
+        ble.gattServer().notify(midiCharacteristicHandle, (uint8_t *)midiBuffer, 4);
     }
 }
 
 void BluetoothMIDIService::sendMidiMessage(uint8_t data0, uint8_t data1, uint8_t data2) {
     if (connected()) {
         unsigned int ticks = tick.read_ms() & 0x1fff;
-        midi[0] = 0x80 | ((ticks >> 7) & 0x3f);
-        midi[1] = 0x80 | (ticks & 0x7f);
-        midi[2] = data0;
-        midi[3] = data1;
-        midi[4] = data2;
+        midiBuffer[0] = 0x80 | ((ticks >> 7) & 0x3f);
+        midiBuffer[1] = 0x80 | (ticks & 0x7f);
+        midiBuffer[2] = data0;
+        midiBuffer[3] = data1;
+        midiBuffer[4] = data2;
         
-        ble.updateCharacteristicValue(midiCharacteristicHandle, midi, 5);
+        ble.gattServer().notify(midiCharacteristicHandle, (uint8_t *)midiBuffer, 5);
     }
 }

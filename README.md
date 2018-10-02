@@ -15,21 +15,20 @@ For another device like a smartphone to use any of the Bluetooth "services" whic
 
 This package allows the @boardname@ to act as a MIDI peripherical, like a piano. It requires to connect to a BLE MIDI device to receive the commands and play them.
 
-Place a ``||bluetooth start midi service||`` block in your program to enable MDI over Bluetooth low energy.
-
-```blocks
-bluetooth.startMidiService();
-```
-
 This library uses the [MIDI package](/pkg/microsoft/pxt-midi). 
-Please refer to that project documentation for further details.
+Please refer to that project documentation for further details on using MIDI commands.
 
 ## Supported Platforms
 
 This package is currently only supported on iOS (iPad/iPhone). 
 Any app that supports a MIDI keyboard or instrument should work.
 
-* iPhone/iPad: [Apple GarageBand](https://itunes.apple.com/us/app/garageband/id408709785?mt=8)
+### Apple GarageBand
+
+* [iPhone/iPad App]](https://itunes.apple.com/us/app/garageband/id408709785?mt=8)
+
+Go to settings (gearwheel), click **Advanced**, click **Bluetooth MIDI device** and connect to the @boardname@.
+If the @boardname@ is marked as offline, click **Edit** and **Forget** the device.
 
 ## Supported targets
 
