@@ -1,6 +1,6 @@
 # bluetooth-midi [![Build Status](https://travis-ci.org/Microsoft/pxt-bluetooth-midi.svg?branch=master)](https://travis-ci.org/Microsoft/pxt-bluetooth-midi)
 
-A [Bluetooth low enery MIDI](https://www.midi.org/specifications/item/bluetooth-le-midi) 
+A [Bluetooth low energy MIDI](https://www.midi.org/specifications/item/bluetooth-le-midi) 
 support for the @boardname@.
 **iOS only currently**.
 
