@@ -54,8 +54,6 @@ BluetoothMIDIService::BluetoothMIDIService(BLEDevice *dev): ble(*dev) {
 
     ble.gattServer().onDataRead(this, &BluetoothMIDIService::onDataRead);
     ble.onDisconnection(this, &BluetoothMIDIService::onDisconnection);
-
-    tick.start();
 }
 
 void BluetoothMIDIService::onDataRead(const GattReadCallbackParams* params) 
@@ -81,7 +79,7 @@ bool BluetoothMIDIService::connected() {
 
 void BluetoothMIDIService::sendMidiMessage(uint8_t data0) {
     if (connected()) {
-        unsigned int ticks = tick.read_ms() & 0x1fff;
+        unsigned int ticks = system_timer_current_time() & 0x1fff;
         midi[0] = 0x80 | ((ticks >> 7) & 0x3f);
         midi[1] = 0x80 | (ticks & 0x7f);
         midi[2] = data0;
@@ -92,7 +90,7 @@ void BluetoothMIDIService::sendMidiMessage(uint8_t data0) {
 
 void BluetoothMIDIService::sendMidiMessage(uint8_t data0, uint8_t data1) {
     if (connected()) {
-        unsigned int ticks = tick.read_ms() & 0x1fff;
+        unsigned int ticks = system_timer_current_time() & 0x1fff;
         midi[0] = 0x80 | ((ticks >> 7) & 0x3f);
         midi[1] = 0x80 | (ticks & 0x7f);
         midi[2] = data0;
@@ -104,7 +102,7 @@ void BluetoothMIDIService::sendMidiMessage(uint8_t data0, uint8_t data1) {
 
 void BluetoothMIDIService::sendMidiMessage(uint8_t data0, uint8_t data1, uint8_t data2) {
     if (connected()) {
-        unsigned int ticks = tick.read_ms() & 0x1fff;
+        unsigned int ticks = system_timer_current_time() & 0x1fff;
         midi[0] = 0x80 | ((ticks >> 7) & 0x3f);
         midi[1] = 0x80 | (ticks & 0x7f);
         midi[2] = data0;

@@ -52,7 +52,6 @@ private:
 
     BLEDevice &ble;
     GattAttribute::Handle_t midiCharacteristicHandle;    
-    Timer tick;
 };
 
 #endif /* __BLEMIDI_H__ */
