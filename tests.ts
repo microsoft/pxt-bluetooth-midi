@@ -4,7 +4,9 @@ bluetooth.onBluetoothConnected(() => {
 bluetooth.onBluetoothDisconnected(() => {
     basic.showString("D")
 })
-bluetooth.startMidiService();
+
+// this is automatic
+// bluetooth.startMidiService();
 
 basic.showString("S")
 input.onButtonPressed(Button.A, () => {

@@ -4,12 +4,13 @@ namespace bluetooth {
      */
     //% blockId=bluetooth_start_midi block="bluetooth start midi service"
     //% part=bluetooth
+    //% blockHidden=1 deprecated=true
     export function startMidiService() {
         function send(buffer: Buffer) {
             bluetooth.midiSendMessage(buffer);
         }
         midi.setTransport(send);
-        bluetooth.midiSendMessage(pins.createBuffer(0));
+        bluetooth.midiSendMessage(pins.createBuffer(0)); // does nothing but starts service lazily
     }
 
     /**
@@ -20,4 +21,7 @@ namespace bluetooth {
     export function midiSendMessage(data: Buffer) {
         return;
     }
+
 }
+// automatically start midi service
+bluetooth.startMidiService();
