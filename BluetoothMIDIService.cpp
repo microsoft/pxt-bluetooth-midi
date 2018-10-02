@@ -35,7 +35,7 @@ const uint8_t midiServiceUuid[] = {
 
 BluetoothMIDIService::BluetoothMIDIService(BLEDevice *dev): ble(*dev) {
     timestamp = 0;
-`    memset(midiBuffer, 0, sizeof(midiBuffer));
+    memset(midiBuffer, 0, sizeof(midiBuffer));
     firstRead = true;
 
     GattCharacteristic midiCharacteristic(midiCharacteristicUuid, midiBuffer, 0, sizeof(midiBuffer), 
