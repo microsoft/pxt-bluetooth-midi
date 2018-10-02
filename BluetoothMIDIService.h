@@ -47,7 +47,7 @@ private:
     void onDisconnection(const Gap::DisconnectionCallbackParams_t* params);
 
     uint16_t timestamp;
-    uint8_t midi[5];
+    uint8_t midiBuffer[5];
     bool firstRead;
 
     BLEDevice &ble;
