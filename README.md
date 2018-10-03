@@ -25,7 +25,7 @@ Any app that supports a MIDI keyboard or instrument should work.
 
 ### Apple GarageBand
 
-* [iPhone/iPad App]](https://itunes.apple.com/us/app/garageband/id408709785?mt=8)
+* [iPhone/iPad App](https://itunes.apple.com/us/app/garageband/id408709785?mt=8)
 
 Go to settings (gearwheel), click **Advanced**, click **Bluetooth MIDI device** and connect to the @boardname@.
 If the @boardname@ is marked as offline, click **Edit** and **Forget** the device.
