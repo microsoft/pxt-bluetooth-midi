@@ -20,6 +20,7 @@ namespace bluetooth {
 
     //%
     void midiSendMessage(Buffer data) {
+        printf("TEst");
         BluetoothMIDIService* pMidi = getMidi();            
         auto buf = PXT_BUFFER_DATA(data);
         
