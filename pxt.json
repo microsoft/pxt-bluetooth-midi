@@ -6,7 +6,7 @@
     "dependencies": {
         "core": "*",
         "bluetooth": "*",
-        "midi": "github:Microsoft/pxt-midi#v2.1.5"
+        "midi": "github:microsoft/pxt-midi#v2.1.8"
     },
     "files": [
         "README.md",
@@ -20,5 +20,6 @@
     "testFiles": [
         "tests.ts"
     ],
-    "public": true
+    "public": true,
+    "installedVersion": "workspace:ba1a3850-63c9-4062-aab8-393d43dccbb2"
 }
